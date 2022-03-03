@@ -163,3 +163,101 @@ binaryAgent(
 //const newStr = String.fromCharCode(charCode);
 //console.log(charCode);
 */
+/*
+function truthCheck(collection, pre) {
+  const predicate = pre;
+  const firstLen = collection.length;
+  const truthArr = [];
+  for (let i = 0; i < collection.length; i++) {
+    //console.log(Object.keys(collection[i]));
+    if (Object.keys(collection[i]).includes(predicate) === false) {
+      break;
+    } else if (
+      Object.values(collection[i]).includes(0) === true ||
+      Object.values(collection[i]).includes(null) === true ||
+      Object.values(collection[i]).includes('') === true ||
+      Object.values(collection[i]).includes(NaN) === true ||
+      Object.values(collection[i]).includes(undefined) === true
+    ) {
+      break;
+    } else {
+      console.log(true);
+      truthArr.push(true);
+    }
+  }
+  if (truthArr.length !== firstLen) {
+    //console.log('Falsy value');
+    return false;
+  } else {
+    //console.log('Truthy value');
+    return true;
+  }
+}
+
+/*
+truthCheck(
+  [
+    { user: 'Tinky-Winky', sex: 'male' },
+    { user: 'Dipsy', sex: 'male' },
+    { user: 'Laa-Laa', sex: 'female' },
+    { user: 'Po', sex: 'female' },
+  ],
+  'sex'
+);*/
+//truthCheck([{ single: '' }, { single: 'double' }], 'single');
+
+/*  map.keys().forEach(element => {
+    if (
+      Object.keys(element).includes(predicate) &&
+      Object.values(element) !== 0
+    ) {
+      matches.push(true);
+    }
+  });
+  if (collection.length === matches.length) {
+    console.log(true);
+    //return true;
+  } else {
+    console.log(false);
+    //return false;
+  }
+function addTogether(a, b) {
+  //console.log(typeof b);
+  if (typeof a !== 'number') {
+    return undefined;
+  }
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a + b;
+    //console.log(a + b);
+  }
+  if (
+    typeof a === 'number' &&
+    typeof b !== 'undefined' &&
+    typeof b !== 'number'
+  ) {
+    return undefined;
+    //console.log(undefined);
+  }
+
+  if (typeof a === 'number' && typeof b == 'undefined') {
+    return function (b) {
+      if (typeof b !== 'number') {
+        return undefined;
+        //console.log(undefined);
+      } else {
+        return a + b;
+        //console.log(a + b);
+      }
+    };
+  }
+}
+//addTogether(2, 3); works
+//addTogether(23, 30); works
+//addTogether(5)(7); works
+//addTogether('https://www.youtube.com/watch?v=dQw4w9WgXcQ'); works
+//addTogether(2, '3'); works
+//addTogether(2)([3]); works
+addTogether('2', 3);
+
+*/
+/////////////// OOP LECTURE ///////////////
