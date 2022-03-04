@@ -258,6 +258,97 @@ function addTogether(a, b) {
 //addTogether(2, '3'); works
 //addTogether(2)([3]); works
 addTogether('2', 3);
-
 */
+
+const Person = function (firstAndLast) {
+  // Only change code below this line
+  // Complete the method below and implement the others similarly
+  this.setFullName = function (firstAndLast) {
+    this.fullName = firstAndLast;
+  };
+  this.setFirstName = function (name) {
+    this.firstName = name;
+  };
+  this.setLastName = function (name) {
+    this.lastName = name;
+  };
+  this.getFirstName = function () {
+    if (this.hasOwnProperty('firstName') === true) {
+      return this.firstName;
+    } else {
+      let arr = firstAndLast.split(' ');
+      console.log(arr);
+      let first = arr[0];
+      this.firstName = first;
+      return this.firstName;
+    }
+  };
+  this.getLastName = function () {
+    let arr = firstAndLast.split(' ');
+    let last = arr[1];
+    if (this.lastName === '') {
+      this.lastName = last;
+      return this.lastName;
+    } else {
+      return this.lastName;
+    }
+  };
+  this.getFullName = function () {};
+};
+
+const bob = new Person('Bob Ross');
+console.log(Object.keys(bob));
+console.log(`The length is ${Object.keys(bob).length}`); //should always be 6
+//console.log(bob instanceof Person); //true
+//console.log(bob.firstName); //undefined
+//console.log(bob.lastName); //undefined
+//console.log(bob.getFirstName()); //Bob
+console.log(bob.getLastName()); //Ross
+//console.log(bob.getFullName()); //Bob Ross
+//bob.setFirstName('Haskell');
+//console.log(bob.getFullName());
+//bob.setLastName('Curry');
+//console.log(bob.getFullName());
+//bob.setFullName('Haskell Curry');
+//console.log(bob.getFullName());
+//console.log(bob.getFirstName());
+//console.log(bob.getLastName());
+/*
 /////////////// OOP LECTURE ///////////////
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+
+  //never create a method inside a constructor function
+  // this.caclAge = function () {
+  // console.log(2037 - this.birthYear);
+  //};
+};
+
+const jonas = new Person('Jonas', 1991);
+console.log(jonas);
+// 1. New {} is created
+// 2. function is called. this = {}
+// 3. {} linked to prototype
+// 4. function automatically returns {}
+
+const matilda = new Person('Matilda', 2017);
+const jack = new Person('Jack', 1975);
+const jay = 'jay';
+console.log(matilda, jack);
+console.log(jonas instanceof Person); //true
+console.log(jay instanceof Person); //false
+
+// Prototypes
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+jonas.calcAge();
+matilda.calcAge();
+Person.prototype.species = 'Homo Sapiens';
+console.log(jonas, matilda); //species will show uop in the .__proto__ of the objects along with calcAge function
+
+console.log(jonas.hasOwnProperty('firstName')); //true
+console.log(jonas.hasOwnProperty('species')); //false b/c that property belonges to the Person property not Jonas
+*/
