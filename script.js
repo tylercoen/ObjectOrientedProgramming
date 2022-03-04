@@ -259,12 +259,14 @@ function addTogether(a, b) {
 //addTogether(2)([3]); works
 addTogether('2', 3);
 */
-
+/*
 const Person = function (firstAndLast) {
   // Only change code below this line
   // Complete the method below and implement the others similarly
   this.setFullName = function (firstAndLast) {
     this.fullName = firstAndLast;
+    this.firstName = firstAndLast.split(' ')[0];
+    this.lastName = firstAndLast.split(' ')[1];
   };
   this.setFirstName = function (name) {
     this.firstName = name;
@@ -276,45 +278,119 @@ const Person = function (firstAndLast) {
     if (this.hasOwnProperty('firstName') === true) {
       return this.firstName;
     } else {
-      let arr = firstAndLast.split(' ');
-      console.log(arr);
-      let first = arr[0];
-      this.firstName = first;
+      this.firstName = firstAndLast.split(' ')[0];
       return this.firstName;
     }
   };
   this.getLastName = function () {
-    let arr = firstAndLast.split(' ');
-    let last = arr[1];
-    if (this.lastName === '') {
-      this.lastName = last;
+    if (this.hasOwnProperty('lastName') === true) {
       return this.lastName;
     } else {
+      this.lastName = firstAndLast.split(' ')[1];
       return this.lastName;
     }
   };
-  this.getFullName = function () {};
+  this.getFullName = function () {
+    if (this.hasOwnProperty('fullName') === true) {
+      return this.fullName;
+    } else {
+      if (
+        this.hasOwnProperty('firstName') === true &&
+        this.hasOwnProperty('lastName') === true
+      ) {
+        return this.firstName + ' ' + this.lastName;
+      } else if (
+        this.hasOwnProperty('firstName') === true &&
+        this.hasOwnProperty('lastName') === false
+      ) {
+        this.lastName = firstAndLast.split(' ')[1];
+        return this.firstName + ' ' + this.lastName;
+      } else if (
+        this.hasOwnProperty('firstName') === false &&
+        this.hasOwnProperty('lastName') === true
+      ) {
+        this.firstName = firstAndLast.split(' ')[0];
+        return this.firstName + ' ' + this.lastName;
+      } else {
+        this.firstName = firstAndLast.split(' ')[0];
+        this.lastName = firstAndLast.split(' ')[1];
+        return this.firstName + ' ' + this.lastName;
+      }
+    }
+  };
+};
+*/
+/*
+const Person = function (firstAndLast) {
+  let fullName = firstAndLast;
+  this.getFirstName = function () {
+    return fullName.split(' ')[0];
+  };
+  this.getLastName = function () {
+    return fullName.split(' ')[1];
+  };
+  this.getFullName = function () {
+    return fullName;
+  };
+  this.setFirstName = function (name) {
+    fullName = name + ' ' + fullName.split(' ')[1];
+  };
+  this.setLastName = function (name) {
+    fullName = fullName.split(' ')[0] + ' ' + name;
+  };
+  this.setFullName = function (name) {
+    fullName = name;
+  };
 };
 
 const bob = new Person('Bob Ross');
 console.log(Object.keys(bob));
-console.log(`The length is ${Object.keys(bob).length}`); //should always be 6
+
 //console.log(bob instanceof Person); //true
 //console.log(bob.firstName); //undefined
 //console.log(bob.lastName); //undefined
 //console.log(bob.getFirstName()); //Bob
-console.log(bob.getLastName()); //Ross
+//console.log(bob.getLastName()); //Ross
 //console.log(bob.getFullName()); //Bob Ross
 //bob.setFirstName('Haskell');
-//console.log(bob.getFullName());
+//console.log(bob.getFullName()); //Haskell Ross
 //bob.setLastName('Curry');
-//console.log(bob.getFullName());
-//bob.setFullName('Haskell Curry');
-//console.log(bob.getFullName());
-//console.log(bob.getFirstName());
-//console.log(bob.getLastName());
-/*
+//console.log(bob.getFullName()); //Bob Curry
+bob.setFullName('Haskell Curry');
+console.log(bob.getFullName()); //Haskell Curry
+console.log(bob.getFirstName()); //Haskell
+console.log(bob.getLastName()); //Curry
+*/
+
+function orbitalPeriod(arr) {
+  let avgAlt = [];
+  for (let i = 0; i < arr.length; i++) {
+    avgAlt.push(arr[i].avgAlt);
+  }
+
+  console.log(avgAlt);
+  const GM = 398600.4418;
+  const earthRadius = 6367.4447;
+  const twoPi = 2 * Math.PI;
+  let arrA = avgAlt.map(x => x + earthRadius);
+  console.log(arrA);
+  let arrB = arrA.map(x => Math.pow(x, 3));
+  console.log(arrB);
+  const T = (twoPi * Math.sqrt(arrB[0])) / GM;
+  console.log(T);
+  return arr;
+}
+
+orbitalPeriod([{ name: 'sputnik', avgAlt: 35873.5553 }]);
+//should return {name: "sputnik", orbitalPeriod: 86400}]
+//orbitalPeriod([
+//{ name: 'iss', avgAlt: 413.6 },
+//{ name: 'hubble', avgAlt: 556.7 },
+//{ name: 'moon', avgAlt: 378632.553 },
+//]);
+//should return [{name : "iss", orbitalPeriod: 5557}, {name: "hubble", orbitalPeriod: 5734}, {name: "moon", orbitalPeriod: 2377399}]
 /////////////// OOP LECTURE ///////////////
+/*
 const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -346,9 +422,118 @@ Person.prototype.calcAge = function () {
 
 jonas.calcAge();
 matilda.calcAge();
+console.log(jonas.__proto__);
+console.log(jonas.__proto__ === Person.prototype);
+
+console.log(Person.prototype.isPrototypeOf(jonas));
+console.log(Person.prototype.isPrototypeOf(matilda));
+console.log(Person.prototype.isPrototypeOf(Person));
+
 Person.prototype.species = 'Homo Sapiens';
 console.log(jonas, matilda); //species will show uop in the .__proto__ of the objects along with calcAge function
 
 console.log(jonas.hasOwnProperty('firstName')); //true
 console.log(jonas.hasOwnProperty('species')); //false b/c that property belonges to the Person property not Jonas
+
+console.log(jonas.__proto__);
+//Object.prototype (top of protoype chain)
+console.log(jonas.__proto__.__proto__);
+console.log(jonas.__proto__.__proto__.__proto__); //null
+
+console.dir(Person.prototype.constructor); //points back at the Person function
+
+const arr = [3, 6, 5, 2, 3, 4]; // new Array === []
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype);
+console.log(arr.__proto__.__proto__); //back to Object.prototype
+
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+console.log(arr.unique());
+const h1 = document.querySelector('h1');
+console.dir(h1); //7 level prototype chain
+console.dir(x => x + 1);
+*/
+
+/////////////////////////////////////////////////////////////////
+// Coding Challenge 1
+// Your tasks:
+//1. Use a constructor function to implement a'Car'. A car has a 'make' and a 'speed' property. the 'speed' property is the current speed of the car in km/h
+//2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console.\
+//3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console.
+//4. Create 2 'Car' objects and experiemnt with calling accelerate and brake multiple times on each of them.
+//Test Date:
+//Data car 1: 'BMW" going at 120 km/h
+//Data car 2: /Mercedes' going at 95 km/h
+/*
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+Car.prototype.accelerate = function () {
+  this.speed = this.speed + 10;
+  console.log(this.speed + ' km/h');
+};
+Car.prototype.brake = function () {
+  this.speed = this.speed - 5;
+  console.log(this.speed + ' km/h');
+};
+const bmw = new Car('BMW', 120);
+const mercedes = new Car('Mercedes', 95);
+
+bmw.accelerate();
+bmw.accelerate();
+mercedes.brake();
+mercedes.brake();
+mercedes.accelerate();
+*/
+/*
+// ES6 Classes
+//Classes are just special functions
+// Class expression
+//const PersonCL = class {}
+// Class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  // Methods will be added to .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  } // no commas between methods
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+  get age() {
+    return 2037 - this.birthYear;
+  }
+}
+
+const jessica = new PersonCl('Jessica', 1996);
+console.log(jessica);
+jessica.calcAge();
+
+jessica.greet();
+
+//1. Classes are NOT hoisted you can't use them before their declared
+//2. Classes are first-class citizens can pass into and return from a function
+//3. Classes are executed in strict mode
+
+// Setters and Getters
+const account = {
+  owner: 'jonas',
+  movements: [200, 250, 333, 52435],
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+  set latest(mov) {
+    this.movements.push(mov);
+  }, //every setter must have a parameter
+};
+
+console.log(account.latest);
+account.latest = 50;
+console.log(account.movements);
 */
