@@ -361,34 +361,43 @@ console.log(bob.getFullName()); //Haskell Curry
 console.log(bob.getFirstName()); //Haskell
 console.log(bob.getLastName()); //Curry
 */
-
+/*
 function orbitalPeriod(arr) {
   let avgAlt = [];
   for (let i = 0; i < arr.length; i++) {
     avgAlt.push(arr[i].avgAlt);
+    delete arr[i].avgAlt;
   }
-
+  console.log(arr);
   console.log(avgAlt);
   const GM = 398600.4418;
   const earthRadius = 6367.4447;
   const twoPi = 2 * Math.PI;
   let arrA = avgAlt.map(x => x + earthRadius);
   console.log(arrA);
-  let arrB = arrA.map(x => Math.pow(x, 3));
+  let arrB = arrA.map(x => x * x * x);
   console.log(arrB);
-  const T = (twoPi * Math.sqrt(arrB[0])) / GM;
+  const squareThis = arrB.map(x => x / GM);
+  console.log(squareThis);
+  const T = [...squareThis.map(x => Math.round(twoPi * Math.sqrt(x)))];
   console.log(T);
+  for (let i = 0; i < T.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      arr[j].orbitalPeriod = T[j];
+    }
+  }
+  console.log(arr);
   return arr;
 }
 
-orbitalPeriod([{ name: 'sputnik', avgAlt: 35873.5553 }]);
+//orbitalPeriod([{ name: 'sputnik', avgAlt: 35873.5553 }]);
 //should return {name: "sputnik", orbitalPeriod: 86400}]
-//orbitalPeriod([
-//{ name: 'iss', avgAlt: 413.6 },
-//{ name: 'hubble', avgAlt: 556.7 },
-//{ name: 'moon', avgAlt: 378632.553 },
-//]);
-//should return [{name : "iss", orbitalPeriod: 5557}, {name: "hubble", orbitalPeriod: 5734}, {name: "moon", orbitalPeriod: 2377399}]
+orbitalPeriod([
+  { name: 'iss', avgAlt: 413.6 },
+  { name: 'hubble', avgAlt: 556.7 },
+  { name: 'moon', avgAlt: 378632.553 },
+]);
+//should return [{name : "iss", orbitalPeriod: 5557}, {name: "hubble", orbitalPeriod: 5734}, {name: "moon", orbitalPeriod: 2377399}]*/
 /////////////// OOP LECTURE ///////////////
 /*
 const Person = function (firstName, birthYear) {
