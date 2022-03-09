@@ -398,6 +398,185 @@ orbitalPeriod([
   { name: 'moon', avgAlt: 378632.553 },
 ]);
 //should return [{name : "iss", orbitalPeriod: 5557}, {name: "hubble", orbitalPeriod: 5734}, {name: "moon", orbitalPeriod: 2377399}]*/
+/*
+function palindrome(str) {
+  str = str
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '')
+    .replace(/[&\/\\#,+()_$~%.'":*?<>{}-]/g, '');
+  console.log(str);
+  const forwardStr = [...str];
+  console.log(forwardStr);
+  const reverseStr = [];
+  for (var i = str.length - 1; i >= 0; i--) {
+    reverseStr.push(str[i]);
+  }
+  console.log(reverseStr);
+  for (let i = 0; i < forwardStr.length; i++) {
+    if (forwardStr[i] != reverseStr[i]) {
+      return false;
+      //console.log(false);
+    } else if (forwardStr[i] === reverseStr[i] && i === forwardStr.length - 1) {
+      return true;
+      //console.log(true);
+    }
+  }
+}
+console.log(palindrome('five|_/|four'));
+*/
+/*
+function convertToRoman(num) {
+  let numArr = Array.from(String(num), Number);
+  //console.log(numArr);
+  let key1 = {
+    0: '',
+    1: 'I',
+    2: 'II',
+    3: 'III',
+    4: 'IV',
+    5: 'V',
+    6: 'VI',
+    7: 'VII',
+    8: 'VIII',
+    9: 'IX',
+  };
+  let key2 = {
+    0: '',
+    1: 'X',
+    2: 'XX',
+    3: 'XXX',
+    4: 'XL',
+    5: 'L',
+    6: 'LX',
+    7: 'LXX',
+    8: 'LXXX',
+    9: 'XC',
+  };
+  let key3 = {
+    0: '',
+    1: 'C',
+    2: 'CC',
+    3: 'CCC',
+    4: 'CD',
+    5: 'D',
+    6: 'DC',
+    7: 'DCC',
+    8: 'DCCC',
+    9: 'CM',
+  };
+  let key4 = {
+    0: '',
+    1: 'M',
+    2: 'MM',
+    3: 'MMM',
+    4: 'MV',
+    5: 'V',
+  };
+
+  let finalArr = [];
+
+  for (let i = numArr.length - 1; i >= 0; i--) {
+    if (numArr.length - 1 === 0) {
+      //console.log(i);
+      finalArr.unshift(key1[numArr[i]]);
+      //console.log(key1[numArr[i]]);
+      break;
+    } else if (i === numArr.length - 1 && numArr.length - 1 !== 0) {
+      //console.log(i);
+      finalArr.unshift(key1[numArr[i]]);
+      //console.log(key1[numArr[i]]);
+    } else if (i === numArr.length - 2) {
+      //console.log(i);
+      finalArr.unshift(key2[numArr[i]]);
+      //console.log(key2[numArr[i]]);
+    } else if (i === numArr.length - 3) {
+      //console.log(i);
+      finalArr.unshift(key3[numArr[i]]);
+      //console.log(key3[numArr[i]]);
+    } else if (i === numArr.length - 4) {
+      finalArr.unshift(key4[numArr[i]]);
+    }
+  }
+  //console.log(finalArr);
+  finalArr = finalArr.join('');
+  //console.log(finalArr);
+  return finalArr;
+}
+convertToRoman(12);
+*/
+/*
+function rot13(str) {
+  const alpha = [
+    ' ',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+  const arr = [...str];
+  let cipherArr = [];
+  //console.log(arr);
+  let punctuation = [];
+  if (
+    arr[arr.length - 1] === '!' ||
+    arr[arr.length - 1] === '?' ||
+    arr[arr.length - 1] === '.'
+  ) {
+    punctuation.push(arr.pop());
+  }
+  //console.log(punctuation);
+  for (let i = 0; i < arr.length; i++) {
+    let num = alpha.indexOf(arr[i]);
+    if (num === 0) {
+      cipherArr.push(alpha[num]);
+    } else {
+      num = num + 13;
+      if (num <= 26) {
+        cipherArr.push(alpha[num]);
+      } else if (num > 26) {
+        num = num - 26;
+        cipherArr.push(alpha[num]);
+      }
+    }
+  }
+  if (punctuation.length != 0) {
+    cipherArr.push(punctuation[0]);
+  }
+  //cipherArr.reverse();
+  //console.log(cipherArr.join(''));
+  return cipherArr.join('');
+}
+
+//rot13('SERR PBQR PNZC'); //FREE CODE CAMP
+rot13('SERR CVMMN!');
+rot13('SERR YBIR?');
+rot13('GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.');
+
+*/
+
 /////////////// OOP LECTURE ///////////////
 /*
 const Person = function (firstName, birthYear) {
@@ -497,18 +676,19 @@ mercedes.brake();
 mercedes.brake();
 mercedes.accelerate();
 */
-/*
+
 // ES6 Classes
 //Classes are just special functions
 // Class expression
 //const PersonCL = class {}
 // Class declaration
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
   // Methods will be added to .prototype property
+  //Instance methods
   calcAge() {
     console.log(2037 - this.birthYear);
   } // no commas between methods
@@ -518,12 +698,25 @@ class PersonCl {
   get age() {
     return 2037 - this.birthYear;
   }
+  // Setting a property that already exists. You have to add the '_' then get it or you'll run into an error.
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+  get fullName() {
+    return this._fullName;
+  }
+  //Static method
+  static hey() {
+    console.log('Hey there');
+  }
 }
 
-const jessica = new PersonCl('Jessica', 1996);
+const jessica = new PersonCl('Jessica Davis', 1996);
 console.log(jessica);
 jessica.calcAge();
-
+console.log(jessica.age);
 jessica.greet();
 
 //1. Classes are NOT hoisted you can't use them before their declared
@@ -531,6 +724,7 @@ jessica.greet();
 //3. Classes are executed in strict mode
 
 // Setters and Getters
+const walter = new PersonCl('Walter White', 1965);
 const account = {
   owner: 'jonas',
   movements: [200, 250, 333, 52435],
@@ -545,4 +739,17 @@ const account = {
 console.log(account.latest);
 account.latest = 50;
 console.log(account.movements);
+
+// Static Methods.
+//Array.from(document.querySelectorAll('h1')); //creates an array from the input.
+//[1,2,3].from()//won't work because from is a static method on the Array object.
+/*
+//You can make your own static methods
+Person.hey = function () {
+  console.log('Hey there ');
+};
+Person.hey();
+//Not inherited
+//jonas.hey(); //throws an error
 */
+PersonCl.hey();
