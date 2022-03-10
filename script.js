@@ -576,7 +576,135 @@ rot13('SERR YBIR?');
 rot13('GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.');
 
 */
+/*
+function telephoneCheck(str) {
+  //remove all white space
+  str = str.replace(/\s+/g, '');
 
+  //Check that there are enough numbers
+  let count = 0;
+  //console.log(str[str.length - 5]);
+  for (let i = str.length - 1; i >= 0; i--) {
+    //console.log(str[i], isNaN(str[i]));
+    console.log(i, str[i]);
+    if (isNaN(str[i]) === false) {
+      count = count + 1;
+    }
+  }
+
+  if (count < 10 || count > 11) {
+    console.log('Too few or too many numbers');
+    return false;
+  } else if (count === 11 && str[0] !== '1') {
+    console.log('Wrong country code');
+    return false;
+  } else if (count === str.length) {
+    //console.log(true);
+    return true;
+  }
+
+  //Check for missing characters
+  if (str.includes('?')) {
+    console.log('Extra characters');
+    return false;
+  }
+  if (str.includes('(') && !str.includes(')')) {
+    console.log('Missing a character');
+    return false;
+  }
+  if (str.includes(')') && !str.includes('(')) {
+    console.log('Missing a character');
+    return false;
+  }
+  if (
+    str[str.length - 13] === '-' &&
+    str[str.length - 9] !== '-' &&
+    str[str.length - 5] !== '-'
+  ) {
+    console.log('Missing a character');
+    return false;
+  }
+  if (
+    str[str.length - 13] === '(' &&
+    str[str.length - 9] !== ')' &&
+    str[str.length - 5] !== '-'
+  ) {
+    console.log('Missing a character');
+    return false;
+  }
+  if (
+    (str[str.length - 9] === ')' && str[str.length - 13] !== '(') ||
+    str[str.length - 5] !== '-'
+  ) {
+    console.log('Missing a character');
+    return false;
+  }
+  //console.log(true);
+  else return true;
+}
+telephoneCheck('(555)5(55?)-5555');
+//telephoneCheck('555)-555-5555');
+//telephoneCheck('27576227382');
+//telephoneCheck('1 555 555 5555');
+//telephoneCheck('5555555555');
+//telephoneCheck('555-555-5555');
+//telephoneCheck('2 (757) 622-7382');
+//telephoneCheck('1 555)555-5555');
+//telephoneCheck('123**&!!asdf#');
+//telephoneCheck('555-5555');
+//telephoneCheck('10 (757) 622-7382');
+*/
+
+function checkCashRegister(price, cash, cid) {
+  //let change = cash - price;
+  let change = 200;
+  console.log('Change due:', change);
+  let register = new Map(cid);
+  console.log(register);
+  console.log(register.get('PENNY'));
+
+  let finalArr = [];
+
+  let checkHundred = function (num) {
+    if (change >= register.get('ONE HUNDRED')) {
+      change = change - 100;
+      register.set('ONE HUNDRED', register.get('ONE HUNDRED') - 100);
+      if ('ONE HUNDRED' in finalArr) {
+        finalArr.set('ONE HUNDRED', finalArr.get('ONE HUNDRED') + 100);
+      } else {
+        finalArr.push(['ONE HUNDRED', 100]);
+      }
+    }
+  };
+  checkHundred(change);
+
+  console.log(change);
+  console.log(finalArr);
+  console.log(register.get('ONE HUNDRED'));
+}
+checkCashRegister(19.5, 20, [
+  ['PENNY', 1.01],
+  ['NICKEL', 2.05],
+  ['DIME', 3.1],
+  ['QUARTER', 4.25],
+  ['ONE', 90],
+  ['FIVE', 55],
+  ['TEN', 20],
+  ['TWENTY', 60],
+  ['ONE HUNDRED', 100],
+]);
+/*
+checkCashRegister(19.5, 20, [
+  ['PENNY', 0.01],
+  ['NICKEL', 0],
+  ['DIME', 0],
+  ['QUARTER', 0],
+  ['ONE', 1],
+  ['FIVE', 0],
+  ['TEN', 0],
+  ['TWENTY', 0],
+  ['ONE HUNDRED', 0],
+]);*/
 /////////////// OOP LECTURE ///////////////
 /*
 const Person = function (firstName, birthYear) {
@@ -676,7 +804,7 @@ mercedes.brake();
 mercedes.brake();
 mercedes.accelerate();
 */
-
+/*
 // ES6 Classes
 //Classes are just special functions
 // Class expression
@@ -752,4 +880,4 @@ Person.hey();
 //Not inherited
 //jonas.hey(); //throws an error
 */
-PersonCl.hey();
+//PersonCl.hey();
