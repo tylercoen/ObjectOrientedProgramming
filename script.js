@@ -654,46 +654,149 @@ telephoneCheck('(555)5(55?)-5555');
 //telephoneCheck('555-5555');
 //telephoneCheck('10 (757) 622-7382');
 */
-
+/*
 function checkCashRegister(price, cash, cid) {
-  //let change = cash - price;
-  let change = 200;
-  console.log('Change due:', change);
+  let change = cash - price;
+  //console.log('Change due:', change);
   let register = new Map(cid);
-  console.log(register);
-  console.log(register.get('PENNY'));
+  //console.log(register);
 
-  let finalArr = [];
-
-  let checkHundred = function (num) {
-    if (change >= register.get('ONE HUNDRED')) {
-      change = change - 100;
-      register.set('ONE HUNDRED', register.get('ONE HUNDRED') - 100);
-      if ('ONE HUNDRED' in finalArr) {
-        finalArr.set('ONE HUNDRED', finalArr.get('ONE HUNDRED') + 100);
-      } else {
-        finalArr.push(['ONE HUNDRED', 100]);
-      }
-    }
+  let finalArr = {
+    status: '',
+    change: [],
   };
-  checkHundred(change);
+  let hundredArr = ['ONE HUNDRED'];
+  let twentyArr = ['TWENTY'];
+  let tenArr = ['TEN'];
+  let fiveArr = ['FIVE'];
+  let oneArr = ['ONE'];
+  let quarterArr = ['QUARTER'];
+  let dimeArr = ['DIME'];
+  let nickelArr = ['NICKEL'];
+  let pennyArr = ['PENNY'];
+  let hundred = register.get('ONE HUNDRED');
+  let twenty = register.get('TWENTY');
+  let ten = register.get('TEN');
+  let five = register.get('FIVE');
+  let one = register.get('ONE');
+  let quarter = register.get('QUARTER');
+  let dime = register.get('DIME');
+  let nickel = register.get('NICKEL');
+  let penny = register.get('PENNY');
+  const checkerFunction = function (highnum, num, arr) {
+    change = change - num;
+    highnum = highnum - num;
+    arr[1] = num;
 
-  console.log(change);
+    while (change >= num && highnum !== 0) {
+      change = change - num;
+      highnum = highnum - num;
+      arr[1] = arr[1] + num;
+    }
+    //console.log('high number:', highnum);
+    change = Number(change.toFixed(2));
+    //console.log(change);
+  };
+  if (change >= 100 && hundred >= 100) {
+    checkerFunction(hundred, 100, hundredArr);
+  }
+  if (change >= 20 && twenty >= 20) {
+    checkerFunction(twenty, 20, twentyArr);
+  }
+  if (change >= 10 && ten >= 10) {
+    checkerFunction(ten, 10, tenArr);
+  }
+  if (change >= 5 && five >= 5) {
+    checkerFunction(five, 5, fiveArr);
+  }
+  if (change >= 1 && one >= 1) {
+    checkerFunction(one, 1, oneArr);
+  }
+  if (change >= 0.25 && quarter >= 0.25) {
+    checkerFunction(quarter, 0.25, quarterArr);
+  }
+  if (change >= 0.1 && dime >= 0.1) {
+    checkerFunction(dime, 0.1, dimeArr);
+  }
+  if (change >= 0.5 && nickel >= 0.5) {
+    checkerFunction(nickel, 0.5, nickelArr);
+  }
+
+  if (change <= penny && penny - change !== penny) {
+    pennyArr[1] = change;
+    change = 0;
+    penny = penny - change;
+  }
+  const arrayChecker = function (arr) {
+    //console.log(arr);
+    if (arr.length > 1) {
+      finalArr.change.push(arr);
+    }
+    //
+  };
+  arrayChecker(hundredArr);
+  arrayChecker(twentyArr);
+  arrayChecker(tenArr);
+  arrayChecker(fiveArr);
+  arrayChecker(oneArr);
+  arrayChecker(quarterArr);
+  arrayChecker(dimeArr);
+  arrayChecker(nickelArr);
+  arrayChecker(pennyArr);
+  //console.log('Change still due:', change);
+
+  if (finalArr.change.length < 1) {
+    finalArr.status = 'INSUFFICIENT_FUNDS';
+    finalArr.change = [];
+  } else if (
+    change === 0 &&
+    hundred === 0 &&
+    twenty === 0 &&
+    ten === 0 &&
+    five === 0 &&
+    one === 0 &&
+    quarter === 0 &&
+    dime === 0 &&
+    nickel === 0
+  ) {
+    finalArr.status = 'CLOSED';
+    nickelArr[1] = 0;
+    dimeArr[1] = 0;
+    quarterArr[1] = 0;
+    oneArr[1] = 0;
+    fiveArr[1] = 0;
+    tenArr[1] = 0;
+    twentyArr[1] = 0;
+    hundredArr[1] = 0;
+    finalArr.change.push(nickelArr);
+    finalArr.change.push(dimeArr);
+    finalArr.change.push(quarterArr);
+    finalArr.change.push(oneArr);
+    finalArr.change.push(fiveArr);
+    finalArr.change.push(tenArr);
+    finalArr.change.push(twentyArr);
+    finalArr.change.push(hundredArr);
+  } else {
+    finalArr.status = 'OPEN';
+  }
   console.log(finalArr);
-  console.log(register.get('ONE HUNDRED'));
+  return finalArr;
 }
 checkCashRegister(19.5, 20, [
-  ['PENNY', 1.01],
-  ['NICKEL', 2.05],
-  ['DIME', 3.1],
-  ['QUARTER', 4.25],
-  ['ONE', 90],
-  ['FIVE', 55],
-  ['TEN', 20],
-  ['TWENTY', 60],
-  ['ONE HUNDRED', 100],
-]);
+  ['PENNY', 0.5],
+  ['NICKEL', 0],
+  ['DIME', 0],
+  ['QUARTER', 0],
+  ['ONE', 0],
+  ['FIVE', 0],
+  ['TEN', 0],
+  ['TWENTY', 0],
+  ['ONE HUNDRED', 0],
+]);*/
 /*
+{status: "CLOSED", change: [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]}
+
+
 checkCashRegister(19.5, 20, [
   ['PENNY', 0.01],
   ['NICKEL', 0],
@@ -705,6 +808,7 @@ checkCashRegister(19.5, 20, [
   ['TWENTY', 0],
   ['ONE HUNDRED', 0],
 ]);*/
+
 /////////////// OOP LECTURE ///////////////
 /*
 const Person = function (firstName, birthYear) {
