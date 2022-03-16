@@ -1126,6 +1126,7 @@ console.log(tesla.speed);
 tesla.chargeBattery(90);
 tesla.accelerate();
 */
+/*
 ///////////////Inheritence using ES6 classes////////////////
 class PersonCl {
   constructor(fullName, birthYear) {
@@ -1183,3 +1184,150 @@ martha.introduce();
 martha.calcAge();
 
 //////// INHERITENCE BETWEEN CLASSES: OBJECT.CREATE ///////////////
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto); //StudentProto now inherits from PersonProto
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+const jay = Object.create(StudentProto); //jay inherits from StudentProto which inherits from PersonProto
+jay.init('Jay', 2010, 'Computer Science');
+jay.introduce();
+jay.calcAge();
+/////////// ANOTHER CLASS EXAMPLE ///////////////
+// Public fields
+// Private fields
+// Public methods
+// Private methods
+// there is also a static method of each
+class Account {
+  // defining a public field (on instances), also referencable by the this keyword
+  locale = navigator.language;
+
+  // private fields (instances)
+  #movements = [];
+  #pin; //declare an empty variable, assign it in the constructor.
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    //protected property v, use and underscore to indicate
+    //this._movements = []; //don't have to base it on any inputs
+    //this.locale = navigator.language;
+    console.log(`Thanks for opening an account ${owner}`);
+  }
+  //Public methods
+  getMovements() {
+    return this.#movements;
+  }
+  deposit(val) {
+    this.#movements.push(val);
+    return this; //allows for method chaining
+  }
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan approved');
+      return this;
+    }
+  }
+  static helper() {
+    //only works on the class itself
+    console.log('Helper');
+  }
+  //Private methods - would use a # like the ones above but not yet implemented in google chrome
+  _approveLoan(val) {
+    return true;
+  }
+}
+const acc1 = new Account('Jonas', 'EUR', 1111);
+console.log(acc1);
+
+//acc1.movements.push(250);
+//acc1.movements.push(-140); better to create methods
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+console.log(acc1.getMovements()); //can access but not change the movements
+console.log(acc1);
+//console.log(acc1.#pin); no longer accessible
+
+/////////////Encapsulation: Protected Properties and Methods//////
+// keep methods private inside the class
+//use underscore to indicate ones that are private.
+//console.log(acc1.#movements); won't work because it is inaccessible getMovements will work
+Account.helper();
+
+////////////// Chaining Methods //////////////////////
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000); //make sure the methods return this
+console.log(acc1.getMovements());
+*/
+/*
+Coding Challenge #4
+Your tasks:
+1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl'
+child class of the 'CarCl' class
+2. Make the 'charge' property private
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery'
+methods of this class, and also update the 'brake' method in the 'CarCl'
+class. Then experiment with chaining!
+Test data:
+  Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
+*/
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed = this.speed + 10;
+    console.log(this.speed + ' km/h');
+    return this;
+  }
+  brake() {
+    this.speed = this.speed - 5;
+    console.log(this.speed + ' km/h');
+    return this;
+  }
+}
+
+class EVCl extends CarCl {
+  #charge;
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+  accelerate() {
+    this.speed = this.speed + 20;
+    this.#charge--;
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 23);
+console.log(rivian);
+rivian.accelerate().accelerate().accelerate().brake();
+console.log(rivian);
